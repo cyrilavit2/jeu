@@ -20,24 +20,40 @@ def ligne_hor():
         c_y += c
 
 
-def click_gauche(event):  # fonction rendant vivante la cellule cliquée donc met la valeur 1 pour la cellule cliquée au dico_case
+def click_gauche(event):
     x = event.x - (event.x % c)
     y = event.y - (event.y % c)
     can1.create_rectangle(x, y, x + c, y + c, fill='black')
     dico_case[x, y] = 1
 
 
-def click_droit(event):  # fonction tuant la cellule cliquée donc met la valeur 0 pour la cellule cliquée au dico_case
+def click_droit(event):
     x = event.x - (event.x % c)
     y = event.y - (event.y % c)
     can1.create_rectangle(x, y, x + c, y + c, fill='white')
     dico_case[x, y] = 0
 
-def click_centre(event):  # fonction tuant la cellule cliquée donc met la valeur 2 pour la cellule cliquée au dico_case
+def click_centre(event):
     x = event.x - (event.x % c)
     y = event.y - (event.y % c)
     can1.create_rectangle(x, y, x + c, y + c, fill='red')
     dico_case[x, y] = 2
+
+def change_vit():  # fonction pour changer la vitesse(l'attente entre chaque étape)
+    global vitesse
+    vitesse = int(eval(entree.get()))
+    print(vitesse)
+# vitesse de l'animation (en réalité c'est l'attente entre chaque étapes en ms)
+vitesse = 20
+
+
+def sauvegarde():
+    "sauvegarde grille"
+    global flag
+
+
+def chang_vit():
+    "sauvegarde grille"
 
 
 
@@ -205,12 +221,16 @@ def redessiner():  # fonction redessinant le tableau à partir de dico_etat
                     can1.create_rectangle(x, y, x + c, y + c, fill='black')
                 else:
                     can1.create_rectangle(x, y, x + c, y + c, fill='white')
-            elif dico_etat[x, y] < 2:
+            elif dico_etat[x, y] < 2 or dico_etat[x, y] > 4:
                 dico_case[x, y] = 0
                 can1.create_rectangle(x, y, x + c, y + c, fill='white')
 
-            elif dico_etat[x,y] < 5:
-                dico_case[x,y]=1
+            elif dico_etat[x,y] == 3:
+                dico_case[x,y] = 0
+                can1.create_rectangle(x, y, x + c, y + c, fill='red')
+
+            elif dico_etat[x, y] == 4:
+                dico_case[x, y] = 2
                 can1.create_rectangle(x, y, x + c, y + c, fill='red')
 
 
@@ -229,8 +249,7 @@ width = 1000
 # taille des cellules
 c = 20
 
-# vitesse de l'animation (en réalité c'est l'attente entre chaque étapes en ms)
-vitesse = 10
+
 
 
 
@@ -254,16 +273,18 @@ fen1 = Tk()
 can1 = Canvas(fen1, width=width, height=height, bg='white')
 can1.bind("<Button-1>", click_gauche)
 can1.bind("<Button-3>", click_droit)
-can1.bind("<Button-4>", click_centre)
+can1.bind("<Button-2>", click_centre)
 can1.pack(side=TOP, padx=5, pady=5)
 
 damier()
 
 b1 = Button(fen1, text='Go!', command=go)
 b2 = Button(fen1, text='Stop', command=stop)
+b3 = Button(fen1, text='vitesse', command=change_vit)
+b4 = Button(fen1, text='sauvegarde', command=sauvegarde)
 b1.pack(side=LEFT, padx=3, pady=3)
 b2.pack(side=LEFT, padx=3, pady=3)
-
-
+b3.pack(side=LEFT, padx=3, pady=3)
+b4.pack(side=LEFT, padx=3, pady=3)
 
 fen1.mainloop()
