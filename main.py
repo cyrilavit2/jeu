@@ -44,16 +44,12 @@ def change_vit():  # fonction pour changer la vitesse(l'attente entre chaque ét
     vitesse = int(eval(entree.get()))
     print(vitesse)
 # vitesse de l'animation (en réalité c'est l'attente entre chaque étapes en ms)
-vitesse = 20
+vitesse = 1
 
 
 def sauvegarde():
     "sauvegarde grille"
-    global flag
 
-
-def chang_vit():
-    "sauvegarde grille"
 
 
 
@@ -225,13 +221,11 @@ def redessiner():  # fonction redessinant le tableau à partir de dico_etat
                 dico_case[x, y] = 0
                 can1.create_rectangle(x, y, x + c, y + c, fill='white')
 
-            elif dico_etat[x,y] == 3:
-                dico_case[x,y] = 0
+            elif dico_etat[x, y] == 4:
+                dico_case[x, y] = 0
                 can1.create_rectangle(x, y, x + c, y + c, fill='red')
 
-            elif dico_etat[x, y] == 4:
-                dico_case[x, y] = 2
-                can1.create_rectangle(x, y, x + c, y + c, fill='red')
+
 
 
 
